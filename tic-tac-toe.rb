@@ -42,7 +42,7 @@ class Game
   end
 
   def switch_player!
-    @current_player = @other_player
+    @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
   def free_positions
@@ -63,7 +63,7 @@ class Game
   def place_marker(player)
     loop do 
       position = player.make_move
-    if @board[position] != @other_player.marker && current_player.marker
+    if (1..9).include?(position)
       return @board[position] = @current_player.marker
     else
       puts "That square has already been taken please select another"
