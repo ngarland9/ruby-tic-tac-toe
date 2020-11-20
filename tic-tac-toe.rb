@@ -10,10 +10,11 @@ class Game
     @current_player = @player1
     @other_player = @player2
   end
-  attr_reader :board, :current_player, :PrintBoard
+  attr_reader :board, :current_player, :print_board
 
   def play()
     loop do
+      print_board
       place_marker(@current_player)
 
       if player_has_won?(@current_player)
@@ -40,7 +41,7 @@ class Game
     free_positions.empty?
   end
 
-  def switch_player()
+  def switch_player!
     @current_player = @other_player
   end
 
@@ -48,7 +49,7 @@ class Game
     (1..9).select {|position| @board[position].nil?}
   end
 
-  def PrintBoard
+  def print_board
     col_separator, row_separator = " | ", "--+---+--"
     label_for_position = lambda{|position| @board[position] ? @board[position] : position}
      
@@ -62,7 +63,7 @@ class Game
   def place_marker(player)
     loop do 
       position = player.make_move
-    if (1..9).include?(@board[position])
+    if @board[position] != @other_player.marker && current_player.marker
       return @board[position] = @current_player.marker
     else
       puts "That square has already been taken please select another"
@@ -86,7 +87,6 @@ end
 
 class HumanPlayer < Player
   def make_move
-      puts @Game.PrintBoard
       print "Please select a square!"
       selection = gets.chomp.to_i
       selection
@@ -98,12 +98,13 @@ end
 class ComputerPlayer < Player
   def make_move
       selection = rand(1..9)
-      selection
-  
+      puts "Computer selects #{selection}"
+      selection.to_i
+    
   end
 end
 
 
 
 
-puts Game.new.play
+Game.new.play
