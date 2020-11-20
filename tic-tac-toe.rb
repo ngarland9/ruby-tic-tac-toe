@@ -6,7 +6,7 @@ class Game
   
     @player1 = HumanPlayer.new(1, "X")
     @player2 = ComputerPlayer.new(2, "O")
-
+    @markers = ["X", "O"]
     @current_player = @player1
     @other_player = @player2
   end
@@ -18,11 +18,11 @@ class Game
       place_marker(@current_player)
 
       if player_has_won?(@current_player)
-        puts "#{@current_player} wins!"
+        puts "#{@current_player} wins! Congrats!"
         print_board
         return
       elsif board_full?
-        puts "It's a draw."
+        puts "It's a tie!!"
         print_board
         return
       end
@@ -63,10 +63,11 @@ class Game
   def place_marker(player)
     loop do 
       position = player.make_move
-    if (1..9).include?(position)
-      return @board[position] = @current_player.marker
-    else
+    if @markers.include?(@board[position])
       puts "That square has already been taken please select another"
+    else
+      return @board[position] = @current_player.marker
+      
       
     end
   end
