@@ -1,10 +1,11 @@
-LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
+WINS = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
+
+
 
 class Game
-  def initialize()
+  def initialize(player1_sentience)
     @board = Array.new(10)
-  
-    @player1 = HumanPlayer.new(1, "X")
+    player1_sentience == "human" ? @player1 = HumanPlayer.new(1, "X") : @player1 = ComputerPlayer.new(1, "X")
     @player2 = ComputerPlayer.new(2, "O")
     @markers = ["X", "O"]
     @current_player = @player1
@@ -32,7 +33,7 @@ class Game
 
 
   def player_has_won?(player)
-    LINES.any? do |line|
+    WINS.any? do |line|
       line.all? {|position| @board[position] == player.marker}
     end
   end
@@ -107,5 +108,5 @@ end
 
 
 
-
-Game.new.play
+Game.new("computer").play
+Game.new("human").play
