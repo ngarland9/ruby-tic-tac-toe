@@ -5,8 +5,8 @@ WINS = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 class Game
   def initialize(player1_sentience)
     @board = Array.new(10)
-    player1_sentience == "human" ? @player1 = HumanPlayer.new(1, "X") : @player1 = ComputerPlayer.new(1, "X")
-    @player2 = ComputerPlayer.new(2, "O")
+    player1_sentience == "human" ? @player1 = HumanPlayer.new(1, "X","You") : @player1 = ComputerPlayer.new(1, "X", "Computer X")
+    @player2 = ComputerPlayer.new(2, "O", "Computer O")
     @markers = ["X", "O"]
     @current_player = @player1
     @other_player = @player2
@@ -19,7 +19,7 @@ class Game
       place_marker(@current_player)
 
       if player_has_won?(@current_player)
-        puts "#{@current_player} wins! Congrats!"
+        puts "#{@current_player.name} wins! Congrats!"
         print_board
         return
       elsif board_full?
@@ -79,11 +79,12 @@ end
 
 
 class Player < Game
-  def initialize(turn, marker)
+  def initialize(turn, marker, name)
     @turn = turn
     @marker = marker
+    @name = name
   end
-  attr_reader :marker
+  attr_reader :marker, :name
 end
 
 
