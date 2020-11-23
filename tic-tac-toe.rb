@@ -11,7 +11,7 @@ class Game
     @current_player = @player1
     @other_player = @player2
   end
-  attr_reader :board, :current_player, :print_board
+  attr_reader :board, :current_player, :print_board, :free_positions
 
   def play()
     loop do
@@ -101,7 +101,15 @@ end
 
 class ComputerPlayer < Player
   def make_move
+    if @turn == 1
+      @turn += 1
+      selection = 5
+    elsif WINS.any? do |line|
+        selection = line.uniq[0] if line.uniq.length < line.length
+    end
+    else
       selection = rand(1..9)
+    end
       puts "\n#{@name} selects #{selection}"
       selection.to_i
     
