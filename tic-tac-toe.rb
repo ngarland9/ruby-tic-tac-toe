@@ -5,7 +5,7 @@ WINS = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 class Game
   def initialize(player1_sentience)
     @board = Array.new(10)
-    player1_sentience == "human" ? @player1 = HumanPlayer.new(1, "X","You") : @player1 = ComputerPlayer.new(1, "X", "Computer X")
+    player1_sentience == "human" ? @player1 = HumanPlayer.new(1, "X","Human Player") : @player1 = ComputerPlayer.new(1, "X", "Computer X")
     @player2 = ComputerPlayer.new(2, "O", "Computer O")
     @markers = ["X", "O"]
     @current_player = @player1
@@ -16,10 +16,11 @@ class Game
   def play()
     loop do
       print_board
+      puts 
       place_marker(@current_player)
 
       if player_has_won?(@current_player)
-        puts "#{@current_player.name} wins! Congrats!"
+        puts "#{@current_player.name} wins! Congrats!\n"
         print_board
         return
       elsif board_full?
@@ -101,7 +102,7 @@ end
 class ComputerPlayer < Player
   def make_move
       selection = rand(1..9)
-      puts "Computer selects #{selection}"
+      puts "\n#{@name} selects #{selection}"
       selection.to_i
     
   end
@@ -110,4 +111,5 @@ end
 
 
 Game.new("computer").play
+puts 
 Game.new("human").play
