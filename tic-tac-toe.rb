@@ -129,7 +129,7 @@ class ComputerPlayer < Player
             @game.current_player.marker == "X" ? @@prior_selectionsX << selection : @@prior_selectionsO << selection
           selection = move[0].sample
           else
-            selection = @game.free_positions[rand(@game.free_positions.length)]
+            @game.free_positions.include?(selection) ? selection = move[1].sample : selection = @game.free_positions[rand(@game.free_positions.length)]
           
           end
        
@@ -141,7 +141,7 @@ class ComputerPlayer < Player
             @game.current_player.marker == "X" ? @@prior_selectionsX << selection : @@prior_selectionsO << selection
             selection = move[0].sample
           else
-            selection = @game.free_positions[rand(@game.free_positions.length)]
+            @game.free_positions.include?(selection) ? selection = move[1].sample : selection = @game.free_positions[rand(@game.free_positions.length)]
             
           end
       
@@ -159,3 +159,4 @@ end
 
 
 Game.new("computer").play
+Game.new("human").play
